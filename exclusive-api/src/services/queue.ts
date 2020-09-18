@@ -39,7 +39,7 @@ export const makeQueueService = (socketServer: Server) => {
     if (queue.length) {
       currUser = queue.shift() as string;
       updatePositions();
-      nextUserTimer = setTimeout(allowNextUser, 8 * 1000);
+      nextUserTimer = setTimeout(allowNextUser, 7 * 1000);
       socketServer.sockets.sockets[currUser].emit('event', 'You are up!');
     } else {
       currUser = null;
@@ -56,10 +56,7 @@ export const makeQueueService = (socketServer: Server) => {
     socket.emit('event', 'Joining queue...');
 
     if (!queue.includes(socket.id)) {
-      socket.emit(
-        'event',
-        `${getQueuePosition(socket.id) + 1} people in front of you...`
-      );
+      socket.emit('event', `${queue.length + 1} people in front of you...`);
       addToQueue(socket.id);
     }
 
