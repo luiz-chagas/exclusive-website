@@ -10,7 +10,7 @@ debug('exclusive-api:server');
  * Get port from environment and store in Express.
  */
 
-const port = Number(process.env.PORT) || 4000;
+const port = Number(process.env.PORT) || 8080;
 app.set('port', port);
 
 /**
