@@ -1,0 +1,19 @@
+{
+  "name": "exclusive-website",
+  "version": "1.0.0",
+  "description": "A very exclusive website",
+  "scripts": {
+    "start": "node exclusive/server/build/server.js",
+    "build": "cd exclusive && npm run build && cd server && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luizjr92/exclusive-website.git"
+  },
+  "author": "Luiz Chagas",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/luizjr92/exclusive-website/issues"
+  },
+  "homepage": "https://github.com/luizjr92/exclusive-website#readme"
+}
