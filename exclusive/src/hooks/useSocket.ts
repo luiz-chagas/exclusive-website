@@ -1,17 +1,29 @@
 import { useEffect, useState } from "react";
+import { ClientState } from "../../types/State";
 import io from "socket.io-client";
 
 export const useSocket = () => {
-  const [lastMessage, setLastMessage] = useState("");
+  const [clientState, setClientState] = useState<ClientState>();
 
   useEffect(() => {
-    const socket = io({
-      transports: ["websocket"],
+    let socket: SocketIOClient.Socket;
+    if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
+      socket = io("localhost:8080", {
+        transports: ["websocket"],
+      });
+    } else {
+      socket = io({
+        transports: ["websocket"],
+      });
+    }
+    socket.on("stateUpdate", (message: ClientState) => {
+      setClientState(message);
     });
-    socket.on("event", (message: string) => {
-      setLastMessage(message);
-    });
+
+    return () => {
+      socket.disconnect();
+    };
   }, []);
 
-  return { lastMessage };
+  return { clientState };
 };

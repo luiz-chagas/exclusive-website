@@ -3,7 +3,7 @@ import { Server } from 'socket.io';
 export const makeQueueService = (socketServer: Server) => {
   let queue: string[] = [];
 
-  let nextUserTimer: NodeJS.Timeout | null = null;
+  let nextUserTimer: NodeJS.Timeout | number | null = null;
   let currUser: string | null = '';
 
   const addToQueue = (socketId: string) => {
@@ -15,10 +15,11 @@ export const makeQueueService = (socketServer: Server) => {
 
   const updatePositions = () => {
     Object.values(socketServer.sockets.sockets).forEach((socket) => {
-      socket.emit(
-        'event',
-        `${getQueuePosition(socket.id) + 1} people in front of you...`
-      );
+      const nextState = {
+        type: 'queue',
+        position: getQueuePosition(socket.id) + 1,
+      };
+      socket.emit('stateUpdate', nextState);
     });
   };
 
@@ -28,19 +29,30 @@ export const makeQueueService = (socketServer: Server) => {
 
   const allowNextUser = () => {
     if (nextUserTimer) {
-      clearInterval(nextUserTimer);
+      clearInterval(nextUserTimer as NodeJS.Timeout);
     }
     if (currUser) {
       if (Object.keys(socketServer.sockets.sockets).includes(currUser)) {
-        socketServer.sockets.sockets[currUser].emit('event', 'Good bye!');
+        const nextState = {
+          type: 'bye',
+          position: 0,
+        };
+        socketServer.sockets.sockets[currUser].emit('stateUpdate', nextState);
         socketServer.sockets.sockets[currUser].disconnect();
       }
     }
     if (queue.length) {
       currUser = queue.shift() as string;
       updatePositions();
-      nextUserTimer = setTimeout(allowNextUser, 7 * 1000);
-      socketServer.sockets.sockets[currUser].emit('event', 'You are up!');
+      nextUserTimer = setTimeout(
+        allowNextUser,
+        ((10 * 1000) as unknown) as NodeJS.Timeout
+      );
+      const nextState = {
+        type: 'up',
+        position: 0,
+      };
+      socketServer.sockets.sockets[currUser].emit('stateUpdate', nextState);
     } else {
       currUser = null;
     }
@@ -53,10 +65,12 @@ export const makeQueueService = (socketServer: Server) => {
       return;
     }
 
-    socket.emit('event', 'Joining queue...');
-
     if (!queue.includes(socket.id)) {
-      socket.emit('event', `${queue.length + 1} people in front of you...`);
+      const nextState = {
+        type: 'queue',
+        position: queue.length + 1,
+      };
+      socket.emit('stateUpdate', nextState);
       addToQueue(socket.id);
     }
 
