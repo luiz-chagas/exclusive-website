@@ -2,6 +2,7 @@
   "name": "exclusive-website",
   "version": "1.0.0",
   "description": "A very exclusive website",
+  "main": "exlusive/server/build/server.js",
   "scripts": {
     "start": "node exclusive/server/build/server.js",
     "build": "cd exclusive && npm run build && cd server && npm run build"
