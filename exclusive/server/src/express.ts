@@ -14,6 +14,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '..', '..', 'build')));
 
 app.use('/api', router);
+app.use((req, res, next) => {
+  res.sendFile(path.join(__dirname, '..', '..', 'build', 'index.html'));
+});
 
 // If it's here, it's a 404
 app.use(function (req, res, next) {

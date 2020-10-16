@@ -4,7 +4,7 @@
   "description": "A very exclusive website",
   "main": "exlusive/server/build/server.js",
   "scripts": {
-    "start": "node exclusive/server/build/server.js",
+    "start": "cd exclusive/server/build && node server.js",
     "build": "cd exclusive && npm run build && cd server && npm run build"
   },
   "repository": {
