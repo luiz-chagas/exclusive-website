@@ -133,7 +133,7 @@ const Main = () => {
   const content = showWindow ? (
     <Window className="window">
       <WindowHeader className="window-header">
-        <span>AmazingContent.exe</span>
+        <span>Toggle98.exe</span>
         <Button onClick={() => setShowWindow(false)}>
           <span className="close-icon" />
         </Button>
