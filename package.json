@@ -5,7 +5,7 @@
   "main": "/exclusive/server/build/server.js",
   "scripts": {
     "start": "cd exclusive/server/build && node server.js",
-    "build": "cd exclusive && npm run build && cd server && npm run build",
+    "build": "(cd exclusive && npm run build); (cd exclusive/server && npm run build);",
     "postinstall": "(cd exclusive && npm install); (cd exclusive/server && npm install);"
   },
   "repository": {
