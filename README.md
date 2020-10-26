@@ -10,6 +10,11 @@ Exclusive website is a website that allows one visitor at a time and handles a q
 
 Visit the website on `localhost:8080`
 
+## Tech
+
+The front-end uses React/TypeScript and Socket.IO
+The back-end uses Nodejs, Express/Typescript and Socket.IO
+
 ## Developing
 
 The front-end part of the project is built with React, you can run it by calling `npm start` from the `/exclusive` directory. The application runs by default on port 3000.
