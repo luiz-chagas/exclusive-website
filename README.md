@@ -2,6 +2,12 @@
 
 Exclusive website is a website that allows one visitor at a time and handles a queue with the people waiting to visit the website.
 
+Content state:
+<img src="./demo1.png">
+
+Queue State:
+<img src="./demo2.png">
+
 ## Running The Project
 
 1. `npm install`
@@ -12,8 +18,8 @@ Visit the website on `localhost:8080`
 
 ## Tech
 
-The front-end uses React/TypeScript and Socket.IO
-The back-end uses Nodejs, Express/Typescript and Socket.IO
+- Front-end uses React/TypeScript and Socket.IO
+- Back-end uses Nodejs, Express/Typescript and Socket.IO
 
 ## Developing
 
